@@ -1,0 +1,200 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #1b1b2f;
+    font-family: 'Orbitron', sans-serif;
+    perspective: 1000px; 
+}
+
+.calculator {
+    width: 320px;
+    background-color: rgba(51, 51, 51, 0.8);
+    border-radius: 15px;
+    box-shadow: 0px 0px 20px rgba(0, 128, 255, 0.5); 
+    overflow: hidden;
+    transform-style: preserve-3d;
+    transition: transform 0.3s ease-in-out;
+}
+
+.calculator:hover {
+    transform: rotateX(10deg) rotateY(10deg) scale(1.05); 
+}
+
+.display {
+    background-color: rgba(34, 34, 34, 0.9);
+    color: #0cf5f5;
+    text-align: right;
+    padding: 20px;
+    font-size: 2em;
+    min-height: 70px;
+    border-radius: 10px;
+    box-shadow: inset 0 0 15px rgba(0, 128, 255, 0.5); 
+    animation: fadeIn 0.5s ease, pulse 1.5s infinite alternate ease-in-out; 
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(-10px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+    0% { box-shadow: inset 0 0 10px rgba(0, 128, 255, 0.3); }
+    100% { box-shadow: inset 0 0 20px rgba(0, 128, 255, 0.7); }
+}
+
+@keyframes glow {
+    0% { box-shadow: 0px 5px 15px rgba(0, 128, 255, 0.3), inset 0px -3px 8px rgba(255, 255, 255, 0.1); }
+    100% { box-shadow: 0px 5px 25px rgba(0, 128, 255, 0.7), inset 0px -3px 12px rgba(255, 255, 255, 0.3); }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-2px); }
+    50% { transform: translateX(2px); }
+    75% { transform: translateX(-2px); }
+}
+
+@keyframes rotate3D {
+    0% {
+        transform: perspective(200px) rotateX(0) rotateY(0);
+        opacity: 1; 
+    }
+    50% {
+        transform: perspective(200px) translateZ(30px) rotateX(180deg);  
+        opacity: 0.5; 
+    }
+    100% {
+        transform: perspective(200px) translateZ(50px) rotateX(360deg); 
+        opacity: 0; 
+    }
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    padding: 10px;
+}
+
+.button {
+    background: rgba(85, 85, 85, 0.9);
+    color: white;
+    font-size: 1.5em;
+    border: none;
+    border-radius: 10px;
+    padding: 20px;
+    cursor: pointer;
+    position: relative;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0px 5px 15px rgba(0, 128, 255, 0.3), inset 0px -3px 8px rgba(255, 255, 255, 0.1);
+}
+
+.button:hover {
+    background-color: #666;
+    transform: rotateY(15deg) rotateX(-5deg) scale(1.05); 
+    box-shadow: 0px 4px 15px rgba(0, 128, 255, 0.5), inset 0px -3px 8px rgba(255, 255, 255, 0.1);
+    animation: glow 1.5s infinite alternate ease-in-out; 
+}
+
+.operator {
+    background: linear-gradient(145deg, #ff8a00, #ffab00);
+    color: white;
+    box-shadow: 0px 5px 15px rgba(255, 165, 0, 0.5); 
+}
+
+.operator:hover {
+    background: linear-gradient(145deg, #ffa733, #ffb766);
+}
+
+.equal {
+    background-color: #ff9500;
+    color: white;
+    grid-column: 3/5;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0px 8px 20px rgba(255, 69, 0, 0.5);
+    transform: perspective(200px) rotateX(10deg);
+    transition: background-color 0.3s ease;
+}
+
+.equal.rotating {
+    animation: rotate3D 0.6s forwards; 
+}
+
+.equal:hover {
+    background-color: #ffa733;
+    transform: perspective(200px) rotateX(0); 
+}
+
+.equal::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.5), transparent);
+    transition: transform 0.3s ease;
+    transform: scale(0);
+    border-radius: 50%;
+}
+
+.equal:hover::after {
+    transform: scale(1.2);
+}
+
+.button:active {
+    transform: scale(0.95) rotateX(5deg);
+    box-shadow: inset 0px 2px 5px rgba(0, 0, 0, 0.2);
+    animation: shake 0.1s 3; 
+}
+
+@keyframes dissolve {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    25% {
+        opacity: 0.75;
+        transform: translateY(-10px) scale(1.1);
+    }
+    50% {
+        opacity: 0.5;
+        transform: translateY(-20px) scale(1.2);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-40px) scale(0.5);
+    }
+}
+
+.display.dissolve {
+    animation: dissolve 0.6s forwards;
+}
+
+@keyframes particle {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+}
+
+.particle {
+    position: absolute;
+    color: #0cf5f5;
+    font-size: 1.5em;
+    pointer-events: none; 
+    animation: particle 0.6s forwards;
+}
