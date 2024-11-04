@@ -1,7 +1,10 @@
 // Funzioni
 function appendNumber(number) {
     if (display.textContent.length > 10) return;
-    currentInput += number;
+    if(lastBtnEqual) {
+        currentInput=number;
+        lastBtnEqual=false;
+    } else currentInput += number;
     updateDisplay();
 }
 
@@ -25,6 +28,7 @@ function clearDisplay() {
 }
 
 function calculate() {
+    
     let computation;
     const prev = parseFloat(previousInput);
     const current = parseFloat(currentInput);
@@ -94,28 +98,29 @@ const dot = document.getElementById("dot");
 let currentInput = "";
 let operator = "";
 let previousInput = "";
-
+let lastBtnEqual=false;
 // Aggiungo gli eventi
 one.addEventListener("click", () => { appendNumber('1'); activateButton(one) });
-two.addEventListener("click", () => { appendNumber('2'); activateButton(two) });
-three.addEventListener("click", () => { appendNumber('3'); activateButton(three) });
+two.addEventListener("click", () => { appendNumber('2'); activateButton(two)});
+three.addEventListener("click", () => { appendNumber('3'); activateButton(three)});
 four.addEventListener("click", () => { appendNumber('4'); activateButton(four) });
-five.addEventListener("click", () => { appendNumber('5'); activateButton(five) });
+five.addEventListener("click", () => { appendNumber('5'); activateButton(five)});
 six.addEventListener("click", () => { appendNumber('6'); activateButton(six) });
 seven.addEventListener("click", () => { appendNumber('7'); activateButton(seven) });
 eight.addEventListener("click", () => { appendNumber('8'); activateButton(eight) });
 nine.addEventListener("click", () => { appendNumber('9'); activateButton(nine) });
-zero.addEventListener("click", () => { appendNumber('0'); activateButton(zero) });
-dot.addEventListener("click", () => { appendNumber('.'); activateButton(dot) });
+zero.addEventListener("click", () => { appendNumber('0'); activateButton(zero)});
+dot.addEventListener("click", () => { appendNumber('.'); activateButton(dot)});
 plus.addEventListener("click", () => setOperator('+'));
 minus.addEventListener("click", () => setOperator('-'));
 multiplicator.addEventListener("click", () => setOperator('*'));
 divisor.addEventListener("click", () => setOperator('/'));
-clear.addEventListener("click", clearDisplay);
+clear.addEventListener("click",clearDisplay);
 result.addEventListener("click", () => {
     calculate();
     result.classList.add('rotating');
     setTimeout(() => {
         result.classList.remove('rotating'); 
-    }, 600); 
+    }, 600);
+    lastBtnEqual = true;
 });
